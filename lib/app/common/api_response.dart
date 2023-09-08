@@ -12,7 +12,6 @@ class APIResponse<T> {
   });
 
   factory APIResponse.fromJson(Map<String, dynamic> json) {
-
     //constant to store response data
     var decodedData = null;
 
@@ -31,7 +30,7 @@ class APIResponse<T> {
           return APIResponse(
             data: decodedData['data'],
             error: false,
-            errorMessage: '',
+            errorMessage: decodedData['message'],
           );
         } else {
           return APIResponse(

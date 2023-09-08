@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:municipal_rental_tc_app/app/modules/Pay_Shop_Rent/views/pay_shop_rent_DetailById.dart';
 import '../../../Widgets/Common_Dropdown.dart';
+import '../../../common/All_Common_Function.dart';
 import '../controllers/pay_shop_rent_controller.dart';
 
 class PayShopRentView extends GetView<PayShopRentController> {
@@ -52,7 +53,7 @@ class PayShopRentView extends GetView<PayShopRentController> {
                       children: [
                         Icon(CupertinoIcons.search_circle),
                         Text(
-                          '  Search Applications',
+                          '  Search Shop',
                           style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
@@ -62,6 +63,17 @@ class PayShopRentView extends GetView<PayShopRentController> {
                     ),
                   ),
                   SizedBox(height: 5,),
+                  Row(
+                    children: [
+                      Icon(CupertinoIcons.info_circle_fill , size: 18,color: Colors.black),
+                      Text("  Select Circle to get Market list ",
+                        style: GoogleFonts.publicSans(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12,
+                            fontStyle: FontStyle.normal),
+                      ),
+                    ],
+                  ),
                   //CIRLCLE
                   Obx(() => CustomDropdownFormField(
                     headingText: 'Circle',
@@ -95,6 +107,17 @@ class PayShopRentView extends GetView<PayShopRentController> {
                     },
                   ),),
                   //MARKET
+                  Row(
+                    children: [
+                      Icon(CupertinoIcons.info_circle_fill , size: 18,color: Colors.black),
+                      Text("  Select Market to get Shop list ",
+                        style: GoogleFonts.publicSans(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12,
+                            fontStyle: FontStyle.normal),
+                      ),
+                    ],
+                  ),
                   Obx(() => CustomDropdownFormField(
                     headingText: 'Market',
                     items: controller.isPageLoading.value
@@ -144,7 +167,7 @@ class PayShopRentView extends GetView<PayShopRentController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Application List',
+                      'Shop List',
                       style:  GoogleFonts.publicSans(
                         fontSize: 18,
                         fontStyle: FontStyle.normal,
@@ -219,56 +242,52 @@ class PayShopRentView extends GetView<PayShopRentController> {
                       final propertyDetails = displayedData[index];
                       return  GestureDetector(
                         onTap: () async{
+                          // Clear the list data before navigating
+                          controller.clearData();
                           await controller.shopById(controller.searchedShopListData[index]['id']);
                           Get.to(() => PayShopRentByIdView(),
                            preventDuplicates: true,);
                         },
-                        child: Card(
-                          margin: EdgeInsets.all(10.0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          elevation: 2,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(4.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.blueAccent[100],
-                                  borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.3),
-                                      spreadRadius: 1,
-                                      blurRadius: 1,
-                                      offset: Offset(0, 1),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.blue[100],
+                              borderRadius: BorderRadius.circular(20.0),
+                              // boxShadow: [
+                              //   BoxShadow(
+                              //     color: Colors.grey.withOpacity(0.1),
+                              //     spreadRadius: 1,
+                              //     blurRadius: 1,
+                              //     offset: Offset(0, 1),
+                              //   ),
+                              // ],
+                            ),
+                            child: Card(
+                              // margin: EdgeInsets.all(10.0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              // elevation: 2,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        _buildDetailsRow('Name', propertyDetails['allottee'].toString()),
+                                        _buildDetailsRow('Shop No', propertyDetails['shop_no'].toString()),
+                                        _buildDetailsRow('Last Paid on', propertyDetails['last_payment_date'].toString()),
+                                        _buildDetailsRow('Address', propertyDetails['address'].toString()),
+                                        _buildDetailsRow('Rate', propertyDetails['rate'].toString()),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                                child: Text(
-                                  'Details',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
                                   ),
-                                ),
+                                ],
                               ),
-                              Container(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    _buildDetailsRow('Name', propertyDetails['allottee'].toString()),
-                                    _buildDetailsRow('Shop No', propertyDetails['shop_no'].toString()),
-                                    _buildDetailsRow('Last Paid on', propertyDetails['last_payment_date'].toString()),
-                                    _buildDetailsRow('Address', propertyDetails['address'].toString()),
-                                    _buildDetailsRow('Rate', propertyDetails['rate'].toString()),
-                                  ],
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
                         ),
                       );
@@ -307,8 +326,8 @@ Widget _buildDetailsRow(String label, String value) {
         ),
         Flexible(
           child: Text(
-           value.isNotEmpty ? value : 'N/A',
-            // nullToNA(value),
+           // value.isNotEmpty ? value : 'N/A',
+            nullToNA(value),
           ),
         ),
       ],

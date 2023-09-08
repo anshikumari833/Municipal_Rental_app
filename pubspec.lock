@@ -7,7 +7,7 @@ packages:
       name: archive
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.3.7"
+    version: "3.3.8"
   async:
     dependency: transitive
     description:
@@ -167,13 +167,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.2"
-  flutter_pinelabs:
-    dependency: "direct main"
-    description:
-      name: flutter_pinelabs
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.0+3"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:

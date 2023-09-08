@@ -22,7 +22,7 @@ class PayTollRentController extends GetxController {
     APIResponse response = await PayTollRentProvider().CircleListData();
     // condition for response error
     if ( response.error == false) {
-      var ResponseList = response.data['data'];
+      var ResponseList = response.data;
       for (var circleDetail in ResponseList) {
         var id = circleDetail['id'].toString();
         var circleName = circleDetail['circle_name'].toString();
@@ -51,7 +51,7 @@ class PayTollRentController extends GetxController {
     APIResponse response = await PayTollRentProvider().MarketListData(selectedTollCircleId);
     // condition for response error
     if ( response.error == false) {
-      var ResponseList = response.data['data'];
+      var ResponseList = response.data;
       for (var marketDetail in ResponseList) {
         var id = marketDetail['id'];
         var marketName = marketDetail['market_name'];
@@ -103,7 +103,7 @@ class PayTollRentController extends GetxController {
     APIResponse response = await PayTollRentProvider().TollListData(selectedTollMarketId);
     // condition for response error
     if ( response.error == false) {
-      var ResponseList = response.data['data'];
+      var ResponseList = response.data;
       if (page == 1) {
         currentPage.value = ResponseList["current_page"];
         totalPages.value = ResponseList["last_page"];
@@ -124,19 +124,18 @@ class PayTollRentController extends GetxController {
 
   //DETAIL LIST BY ID
   var ShopListDataById = List<dynamic>.empty(growable: true).obs;
-  var idData_sairatName = "";
-  var  idData_contactNo = "";
-  var  idData_presentOccupier = "";
+  var idData_VendorName = "";
+  var  idData_Address = "";
   var  idData_circle = "";
-  var  idData_address  = "";
   var  idData_market = "";
-  var   idData_monthlyRent = "";
-  var  idData_lastDemand = "";
-  var idData_paidUpto = "";
-  var  idData_lastPtmOn = "";
-  var idData_shopNo = "";
-  var idData_Id = "";
-  var  idData_userId = "";
+  var   idData_Rate = "";
+  var  idData_lastPaymentDate = "";
+  var  idData_lastPymentAmt = "";
+  var  idData_id = "";
+  var  idData_TollType = "";
+  var  idData_mobileNo = "";
+  var  idData_TollNo  = "";
+
 
   TollById(int tollId) async {
     await getShopDetailById(tollId);
@@ -146,20 +145,19 @@ class PayTollRentController extends GetxController {
     isPageLoading.value = true;
     APIResponse response = await PayTollRentProvider().TollListDataById(tollId);
     if ( response.error == false) {
-      var data = response.data['data'];
-      idData_sairatName = data['allottee'].toString();
-      idData_presentOccupier = data['present_occupier'].toString();
-      idData_contactNo = data['contact_no'].toString();
+      var data = response.data;
+      idData_VendorName = data['vendor_name'].toString();
+      idData_Address = data['address'].toString();
       idData_circle = data['circle_name'].toString();
-      idData_address = data['address'].toString();
       idData_market = data['market_name'].toString();
-      idData_monthlyRent = data['rate'].toString();
-      idData_lastDemand = data['last_payment_amount'].toString();
-      idData_paidUpto = data['payment_upto'].toString();
-      idData_lastPtmOn = data['last_payment_date'].toString();
-      idData_shopNo = data['shop_no'].toString();
-      idData_Id = data['id'].toString();
-      idData_userId = data['user_id'].toString();
+      idData_Rate = data['rate'].toString();
+      idData_TollNo = data['toll_no'].toString();
+      idData_mobileNo = data['mobile'].toString();
+      idData_lastPaymentDate= data['last_payment_date'].toString();
+      idData_lastPymentAmt = data['last_payment_amount'].toString();
+      idData_id = data['id'].toString();
+      idData_TollType = data['toll_type'].toString();
+
       isPageLoading.value = false;
     } else {
       Get.snackbar(

@@ -14,68 +14,30 @@ class AddTollsProvider extends GetConnect {
   //CIRCLE LIST (--DROPDOWN LIST--)
   Future<APIResponse> CircleListData() async {
     String url = Strings.base_url + '/api/market/rental/list-ulb-wise-circle';
-    try {
       final response = await post(url, {}, headers: Strings.headers);
-      if (response.status.hasError) {
-        return APIResponse(
-            data: null, error: true, errorMessage: response.statusText!);
-      } else {
-        return  APIResponse(
-            data: response.body,
-            error: false,
-            errorMessage: response.statusText!);
-      }
-    } catch (exception) {
-      return APIResponse(
-          data: null, error: true, errorMessage: exception.toString());
+      return APIResponse.fromJson({"data" : response.body, "error": response.status.hasError});
     }
-  }
+
+
   //MARKET LIST BY CIRCLE (--DROPDOWN LIST--)
   Future<APIResponse> MarketListData(selectedCircleId) async {
     String url = Strings.base_url + '/api/market/rental/list-circle-wise-market';
-    try {
       final response = await post(url, {
         "circleId": selectedCircleId
       }, headers: Strings.headers);
-      if (response.status.hasError) {
-        return APIResponse(
-            data: null, error: true, errorMessage: response.statusText!);
-      } else {
-        return  APIResponse(
-            data: response.body,
-            error: false,
-            errorMessage: response.statusText!);
-      }
-    } catch (exception) {
-      return APIResponse(
-          data: null, error: true, errorMessage: exception.toString());
-    }
+    return APIResponse.fromJson({"data" : response.body, "error": response.status.hasError});
   }
 
   //RATE LIST (--DROPDOWN LIST--)
   Future<APIResponse> RateListData() async {
     String url = Strings.base_url + '/api/market/rental/get-toll-price-list';
-    try {
       final response = await post(url, {}, headers: Strings.headers);
-      if (response.status.hasError) {
-        return APIResponse(
-            data: null, error: true, errorMessage: response.statusText!);
-      } else {
-        return  APIResponse(
-            data: response.body,
-            error: false,
-            errorMessage: response.statusText!);
-      }
-    } catch (exception) {
-      return APIResponse(
-          data: null, error: true, errorMessage: exception.toString());
-    }
+    return APIResponse.fromJson({"data" : response.body, "error": response.status.hasError});
   }
 
   //SUBMIT APPLICATION
   Future<APIResponse> SubmitTollApplication(Map data) async {
     String url = Strings.base_url + '/api/market/crud/toll/insert';
-
     final request = http.MultipartRequest('POST', Uri.parse(url));
     request.headers.addAll(Strings.headers);
     request.fields['circleId'] = data['circle'];
@@ -103,20 +65,6 @@ class AddTollsProvider extends GetConnect {
 
     final response = await request.send();
     final responseStream = await response.stream.bytesToString();
-
-    if (response.statusCode == 200) {
-       final responseData = json.decode(responseStream);
-      return APIResponse(
-        data: responseData,
-        error: false,
-        errorMessage: '',
-      );
-    } else {
-      return APIResponse(
-        data: response,
-        error: true,
-        errorMessage: '',
-      );
-    }
+    return APIResponse.fromJson({"data": responseStream, "error": false});
   }
 }

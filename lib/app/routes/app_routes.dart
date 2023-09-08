@@ -11,6 +11,7 @@ abstract class Routes {
   static const PAY_TOLL_RENT = _Paths.PAY_TOLL_RENT;
   static const NOTIFICATION_SCREEN = _Paths.NOTIFICATION_SCREEN;
   static const SETTING_SCREEN = _Paths.SETTING_SCREEN;
+  static const PAYMENT_TEST = _Paths.PAYMENT_TEST;
 }
 
 abstract class _Paths {
@@ -23,4 +24,5 @@ abstract class _Paths {
   static const PAY_TOLL_RENT = '/pay-toll-rent';
   static const NOTIFICATION_SCREEN = '/notification-screen';
   static const SETTING_SCREEN = '/setting-screen';
+  static const PAYMENT_TEST = '/payment-test';
 }

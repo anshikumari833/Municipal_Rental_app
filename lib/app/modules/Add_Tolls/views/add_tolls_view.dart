@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'dart:io';
 import 'package:get/get.dart';
@@ -34,6 +36,20 @@ class AddTollsView extends GetView<AddTollsController> {
           child: Column(
             children: [
               SizedBox(height: 20,),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Icon(CupertinoIcons.info_circle_fill , size: 18,color: Colors.black),
+                    Text("  Select Market to get Shop list ",
+                      style: GoogleFonts.publicSans(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 12,
+                          fontStyle: FontStyle.normal),
+                    ),
+                  ],
+                ),
+              ),
               //CIRLCLE
               Obx(() => CustomDropdownFormField(
                 headingText: 'Circle',
@@ -106,15 +122,73 @@ class AddTollsView extends GetView<AddTollsController> {
                   }
                   return "";
                 },),
-              CustomTextField(
-                controller: controller.mobileNoController,
-                headingText: "Mobile No",
-                hintText: "Enter mobile no",validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'This field is required';
-                }
-                return "";
-              },),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 100,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                        child: Text(
+                          "Mobile No",
+                          style: GoogleFonts.publicSans(
+                            fontSize: 14,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                        child: TextFormField(
+                          controller:  controller.mobileNoController,
+                          keyboardType: TextInputType.number,
+                          maxLength:10,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            filled: true,
+                            fillColor: Colors.grey[200],
+                            disabledBorder: InputBorder.none,
+                            hintText:  "Enter mobile no",
+                            hintStyle: GoogleFonts.publicSans(
+                              fontSize: 12,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter mobile no';
+                            }
+                            if (value.length < 10) {
+                              return 'Please enter a valid mobile no';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // CustomTextField(
+              //   controller: controller.mobileNoController,
+              //   headingText: "Mobile No",
+              //   hintText: "Enter mobile no",validator: (value) {
+              //   if (value == null || value.isEmpty) {
+              //     return 'This field is required';
+              //   }
+              //   return "";
+              // },),
               CustomTextField(
                 controller: controller.landmarkController,
                 headingText: "Landmark",
@@ -209,7 +283,7 @@ class AddTollsView extends GetView<AddTollsController> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   MaterialButton(
-                      color: Colors.green,
+                      color: Colors.brown[200],
                       child: Text(
                         "Camera",
                         style: TextStyle(color: Colors.white),
@@ -218,7 +292,7 @@ class AddTollsView extends GetView<AddTollsController> {
                         controller.getImage1(ImageSource.camera);
                       }),
                   MaterialButton(
-                      color: Colors.deepOrange,
+                      color: Colors.orange[300],
                       child: Text(
                         "Device",
                         style: TextStyle(color: Colors.white),
@@ -257,7 +331,7 @@ class AddTollsView extends GetView<AddTollsController> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   MaterialButton(
-                      color: Colors.green,
+                      color: Colors.brown[200],
                       child: Text(
                         "Camera",
                         style: TextStyle(color: Colors.white),
@@ -266,7 +340,7 @@ class AddTollsView extends GetView<AddTollsController> {
                         controller.getImage2(ImageSource.camera);
                       }),
                   MaterialButton(
-                      color: Colors.deepOrange,
+                      color: Colors.orange[300],
                       child: Text(
                         "Device",
                         style: TextStyle(color: Colors.white),

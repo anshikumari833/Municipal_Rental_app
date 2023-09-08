@@ -38,9 +38,11 @@ class _PrintReceiptState extends State<PrintReceipt> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text(''),
+          elevation: 0,
+          title: const Text('Print Receipt'),
           actions: [
             PopupMenuButton(
               elevation: 3.2,
@@ -83,14 +85,19 @@ class _PrintReceiptState extends State<PrintReceipt> {
           ],
         ),
         body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
+          // scrollDirection: Axis.vertical,
           child: Container(
             padding: EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('info: $_info\n '),
+                SizedBox(height: 10,),
+                Text('Information :  $_info\n '),
+                SizedBox(height: 15,),
+                Text('Note :  Make sure your bluetooth is turned on.Click search to find bluetooth printing device.'),
+                SizedBox(height: 20,),
                 Text(_msj),
+                SizedBox(height: 20,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -124,7 +131,7 @@ class _PrintReceiptState extends State<PrintReceipt> {
                   ],
                 ), // Bluetooth option buttons
                 Container(
-                    height: 150,
+                   height: 250,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                       color: Colors.grey.withOpacity(0.3),
@@ -172,7 +179,7 @@ class _PrintReceiptState extends State<PrintReceipt> {
                       child: Text("Print"),
                     ),
                   ]),
-                ), // Printable Text
+                ),// Printable Text
                 SizedBox(
                   height: 10,
                 ),
@@ -314,24 +321,24 @@ class _PrintReceiptState extends State<PrintReceipt> {
     final profile = await CapabilityProfile.load();
     final generator = Generator(PaperSize.mm58, profile);
     bytes += generator.reset();
-    bytes += generator.qrcode('example.com');
+    // bytes += generator.qrcode('example.com');
     bytes += generator.text(
-      // '    ****JHARKHAND****',
-      'Ranchi Municipal Corporation',
+      '   Akola Municipal Corporation  ',
       styles: PosStyles(
         fontType: PosFontType.fontB,
         bold: true,
       ),
     );
-    // bytes += generator.text('***** JUIDCO *****', styles: PosStyles(bold: true));
-    bytes += generator.text('           Citizen Copy', styles: PosStyles(bold: true));
+   // bytes += generator.text('*****  AMC  *****', styles: PosStyles(bold: true));
+    bytes += generator.text('            Maharashtra         ', styles: PosStyles(bold: true));
+    // bytes += generator.text('         Citizen Copy        ', styles: PosStyles(bold: true));
     // bytes += generator.feed(2);
     // bytes += generator.text(" ", styles: PosStyles(bold: true));
     // bytes += generator.text("   RANCHI", styles: PosStyles(bold: true));
-    bytes += generator.text("           Payment Receipt", styles: PosStyles(bold: true));
-    // bytes += generator.text("........................................", styles: PosStyles(bold: true));
+    // bytes += generator.text("................................", styles: PosStyles(bold: true));
+    bytes += generator.text("         Payment Receipt        ", styles: PosStyles(bold: true));
+    // bytes += generator.text("................................", styles: PosStyles(bold: true));
     bytes += generator.text(tmpStr, styles: PosStyles(bold: true));
-
     // bytes += generator.text("........................................", styles: PosStyles(bold: true));
     // bytes += generator.text(tmpStrSecondLine, styles: PosStyles(bold: true));
     bytes += generator.text("", styles: PosStyles(bold: true));

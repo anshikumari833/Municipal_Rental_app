@@ -170,10 +170,10 @@ class AddShopsView extends GetView<AddShopsController> {
                       ),
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Please enter pin code';
+                          return 'Please enter contact no';
                         }
-                        if (value.length < 6) {
-                          return 'Please enter a valid pin code';
+                        if (value.length < 10) {
+                          return 'Please enter a valid contact no';
                         }
                         return null;
                       },

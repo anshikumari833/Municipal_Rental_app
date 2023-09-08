@@ -25,7 +25,7 @@ class LoginScreenView extends GetView<LoginScreenController> {
             child: Container(
               child: Column(
                 children: [
-                  SizedBox(height:60,),
+                  SizedBox(height:50,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -113,7 +113,7 @@ class LoginScreenView extends GetView<LoginScreenController> {
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.redAccent,
-                              padding: EdgeInsets.symmetric(horizontal: 130),
+                              padding: EdgeInsets.symmetric(horizontal: 120),
                             ),
                             child: Text(
                               "LOGIN",
@@ -126,7 +126,7 @@ class LoginScreenView extends GetView<LoginScreenController> {
                         ),
                       ],
                     ),),
-                  SizedBox(height:120,),
+                  SizedBox(height:140,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -139,6 +139,7 @@ class LoginScreenView extends GetView<LoginScreenController> {
                       ),
                     ],
                   ),
+                  SizedBox(height:20,),
                 ],
               ),
             ),

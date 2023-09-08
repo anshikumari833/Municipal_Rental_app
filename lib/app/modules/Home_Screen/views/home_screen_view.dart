@@ -51,7 +51,7 @@ class HomeScreenView extends GetView<HomeScreenController> {
           child: Row(
             children: [
               Container(
-                width: 100,
+                width: 90,
                 height: 100,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
@@ -72,7 +72,7 @@ class HomeScreenView extends GetView<HomeScreenController> {
                     child: Column(
                       children: [
                         Text(
-                           ' Akola Municipal Corporation',
+                           'Akola Municipal Corporation',
                           style: GoogleFonts.publicSans(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
@@ -179,6 +179,7 @@ class HomeScreenView extends GetView<HomeScreenController> {
                 ),
               ],
             ),
+
             Container(
                 padding: const EdgeInsets.symmetric(horizontal: 30,vertical:20),
               decoration: BoxDecoration(
@@ -191,7 +192,7 @@ class HomeScreenView extends GetView<HomeScreenController> {
                   ContainerItem(
                   'Notification  ',
                   CupertinoIcons.bell_fill,
-                  Colors.yellow.shade100,
+                  Colors.amber.shade200,
                   Routes.NOTIFICATION_SCREEN,
                 ),
                   ContainerItem(
@@ -203,6 +204,13 @@ class HomeScreenView extends GetView<HomeScreenController> {
               )
             ),
 
+            ContainerItem(
+              ' Test_Paypine  ',
+              Icons.paypal,
+              Colors.brown.shade100,
+              Routes.PAYMENT_TEST,
+            ),
+            SizedBox(height:40,),
           ]),),
     );
   }
@@ -247,7 +255,7 @@ ContainerItem(String title, IconData iconData, Color background, String routeNam
   },
   child: Container(
     height: 50,
-    width:150,
+    width:130,
     decoration: BoxDecoration(
       color: background,
       boxShadow: [
@@ -260,13 +268,13 @@ ContainerItem(String title, IconData iconData, Color background, String routeNam
       ],
     ),
     child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Container(
           padding: const EdgeInsets.all(8),
           child: Icon(iconData, color: Colors.black, size: 24),
         ),
-        const SizedBox(width: 6),
+         // SizedBox(width: 6),
         Text(
           title,
           style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500),

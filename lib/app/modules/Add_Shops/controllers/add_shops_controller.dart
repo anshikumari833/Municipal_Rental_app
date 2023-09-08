@@ -67,7 +67,7 @@ Future<void> getCircleDetail() async {
   APIResponse response = await AddShopsProvider().CircleListData();
   // condition for response error
   if ( response.error == false) {
-      var ResponseList = response.data['data'];
+      var ResponseList = response.data;
       for (var circleDetail in ResponseList) {
         var id = circleDetail['id'].toString();
         var circleName = circleDetail['circle_name'].toString();
@@ -96,7 +96,7 @@ Future<void> getCircleDetail() async {
     APIResponse response = await AddShopsProvider().MarketListData(selectedCircleId);
     // condition for response error
     if ( response.error == false) {
-      var ResponseList = response.data['data'];
+      var ResponseList = response.data;
       for (var marketDetail in ResponseList) {
         var id = marketDetail['id'];
         var marketName = marketDetail['market_name'];
@@ -123,7 +123,7 @@ Future<void> getCircleDetail() async {
     APIResponse response = await AddShopsProvider().ConstructionListData();
     // condition for response error
     if ( response.error == false) {
-      var ResponseList = response.data['data'];
+      var ResponseList = response.data;
       for (var constructionDetail in ResponseList) {
         var id = constructionDetail['id'].toString();
         var circleName = constructionDetail['construction_type'].toString();
@@ -174,6 +174,7 @@ late TextEditingController lastPaymentAmountController;
 
   //SUBMIT APPLICATION
   Future<void> ShopApplicationForm() async {
+    isPageLoading.value = true;
     // // Validate the form fields
     // if (!ShopFormkey.currentState!.validate()) {
     //   // Form has validation errors, do not proceed with submission
@@ -231,17 +232,33 @@ late TextEditingController lastPaymentAmountController;
           Get.back();
         },
       )..show();
+      Get.snackbar(
+        '😁😁',
+        result.errorMessage,
+        backgroundColor: Colors.lightBlueAccent,
+        colorText: Colors.white,
+      );
+      isPageLoading.value = false;
     }
     else {
       AwesomeDialog(
         context: Get.context!,
         dialogType: DialogType.error,
+        animType: AnimType.rightSlide,
+        headerAnimationLoop: false,
         title: 'Error',
-        desc: 'Some isuue occured',
-        btnOkOnPress: () {
-          Get.back();
-        },
-      )..show();
+        desc: result.errorMessage,
+        btnOkOnPress: () {},
+        btnOkIcon: Icons.cancel,
+        btnOkColor: Colors.red,
+      ).show();
+      Get.snackbar(
+        '😫😫',
+        result.errorMessage,
+        backgroundColor: Colors.lightBlueAccent,
+        colorText: Colors.white,
+      );
+      isPageLoading.value = false;
     }
   }
 

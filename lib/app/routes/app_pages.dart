@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+
 import '../modules/Add_Shops/bindings/add_shops_binding.dart';
 import '../modules/Add_Shops/views/add_shops_view.dart';
 import '../modules/Add_Tolls/bindings/add_tolls_binding.dart';
@@ -15,6 +16,8 @@ import '../modules/Pay_Toll_Rent/bindings/pay_toll_rent_binding.dart';
 import '../modules/Pay_Toll_Rent/views/pay_toll_rent_view.dart';
 import '../modules/Setting_Screen/bindings/setting_screen_binding.dart';
 import '../modules/Setting_Screen/views/setting_screen_view.dart';
+import '../modules/payment_test/bindings/payment_test_binding.dart';
+import '../modules/payment_test/views/payment_test_view.dart';
 
 part 'app_routes.dart';
 
@@ -63,6 +66,11 @@ class AppPages {
       name: _Paths.SETTING_SCREEN,
       page: () => const SettingScreenView(),
       binding: SettingScreenBinding(),
+    ),
+    GetPage(
+      name: _Paths.PAYMENT_TEST,
+      page: () => const PaymentTestView(),
+      binding: PaymentTestBinding(),
     ),
   ];
 }

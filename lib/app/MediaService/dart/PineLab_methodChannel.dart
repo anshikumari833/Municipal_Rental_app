@@ -1,11 +1,16 @@
 import 'package:flutter/services.dart';
 
-Future<void> bindToPlutusService() async {
-  const platform = MethodChannel("com.amcakola.municipal_rental_tc_app/");
-  try {
-    await platform.invokeMethod('bindToPlutusService');
-    print('Bound to Plutus Smart Service');
-  } on PlatformException catch (e) {
-    print('Error binding to Plutus Smart Service: ${e.message}');
+class PaymentService {
+  //MethodChannel name  to communicate with Flutter
+  static const platform = MethodChannel("com.amcakola.municipal_rental_tc_app/com.pinelabs.masterapp");
+  // calls from Flutter
+  static Future<void> sendIntentToPineLabs() async {
+    try {
+      //listens for a method "sendPaymentIntent"
+      await platform.invokeMethod('sendPaymentIntent');
+      print('Sent intent to Pine Labs');
+    } on PlatformException catch (e) {
+      print('Error sending intent: ${e.message}');
+    }
   }
 }

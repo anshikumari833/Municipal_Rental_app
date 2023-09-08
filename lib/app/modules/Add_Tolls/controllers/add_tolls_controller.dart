@@ -49,7 +49,7 @@ class AddTollsController extends GetxController {
     APIResponse response = await AddTollsProvider().CircleListData();
     // condition for response error
     if ( response.error == false) {
-      var ResponseList = response.data['data'];
+      var ResponseList = response.data;
       for (var circleDetail in ResponseList) {
         var id = circleDetail['id'].toString();
         var circleName = circleDetail['circle_name'].toString();
@@ -77,7 +77,7 @@ class AddTollsController extends GetxController {
     APIResponse response = await AddTollsProvider().MarketListData(selectedCircleId);
     // condition for response error
     if ( response.error == false) {
-      var ResponseList = response.data['data'];
+      var ResponseList = response.data;
       for (var marketDetail in ResponseList) {
         var id = marketDetail['id'];
         var marketName = marketDetail['market_name'];
@@ -104,7 +104,7 @@ class AddTollsController extends GetxController {
     APIResponse response = await AddTollsProvider().RateListData();
     // condition for response error
     if ( response.error == false) {
-      var ResponseList = response.data['data'];
+      var ResponseList = response.data;
       for (var constructionDetail in ResponseList) {
         var id = constructionDetail['id'].toString();
         var rateDetail = constructionDetail['rate'].toString();
@@ -164,6 +164,8 @@ class AddTollsController extends GetxController {
 
   //SUBMIT APPLICATION
   Future<void> TollsApplicationForm() async {
+     isPageLoading.value = true;
+    Get.dialog(Center(child: CircularProgressIndicator()), barrierDismissible: false);
     String _img64Image1, _img64Image2;
     final bytes1 = await _selectedFile1!.readAsBytes();
     final bytes2 = await _selectedFile2!.readAsBytes();
@@ -186,11 +188,13 @@ class AddTollsController extends GetxController {
           'rate': rate.value.toString(),
           'longitude': longitudeController.value.text,
           'latitude': latitudeController.value.text,
-          'remarks': remarkController.value.toString(),
+          'remarks': remarkController.value.text.toString(),
           'photograph1':file1,
           'photograph2':file2,
         });
     if (result.error == false) {
+      // Close the loading dialog
+      Get.back();
       AwesomeDialog(
         context: Get.context!,
         dialogType: DialogType.success,
@@ -200,17 +204,40 @@ class AddTollsController extends GetxController {
           Get.back();
         },
       )..show();
+      Get.snackbar(
+        '😁😁',
+        result.errorMessage,
+        backgroundColor: Colors.lightBlueAccent,
+        colorText: Colors.white,
+      );
+      isPageLoading.value = false;
     }
+      // isPageLoading.value = false;
     else {
+      Get.back();
       AwesomeDialog(
         context: Get.context!,
         dialogType: DialogType.error,
+        animType: AnimType.rightSlide,
+        headerAnimationLoop: false,
         title: 'Error',
-        desc: 'Some isuue occured',
+        // desc:
+        // 'Some isuue occured',
+        desc: result.errorMessage,
         btnOkOnPress: () {
           Get.back();
         },
-      )..show();
+        btnOkIcon: Icons.cancel,
+        btnOkColor: Colors.red,
+      ).show();
+      Get.snackbar(
+        '😫😫',
+        result.errorMessage,
+        backgroundColor: Colors.lightBlueAccent,
+        colorText: Colors.white,
+      );
+      isPageLoading.value = false;
+      // isPageLoading.value = false;
     }
   }
 
